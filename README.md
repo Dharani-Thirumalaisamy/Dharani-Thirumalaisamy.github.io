@@ -1,1 +1,0 @@
-# Gun and Knife Detection
