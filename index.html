@@ -1,0 +1,196 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>CSYE 7374 : FINAL PROJECT REPORT</title>
+  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../elements/codelab.html">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <style is="custom-style">
+    body {
+      font-family: "Roboto",sans-serif;
+      background: var(--google-codelab-background, #F8F9FA);
+    }
+  </style>
+  
+</head>
+<body unresolved class="fullbleed">
+
+  <google-codelab title="CSYE 7374 : FINAL PROJECT REPORT"
+                  environment="web"
+                  feedback-link="github.com/Dharani-Thirumalaisamy">
+    
+      <google-codelab-step label="Project Topic" duration="0">
+        <p><strong>Gun and Knife Identification In Images</strong></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Authors" duration="0">
+        <ul>
+<li><strong> Dharani Thirumalaisamy </strong></li>
+<li><strong> Pramod Nagare </strong></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Objective" duration="0">
+        <p>As we know we humans are very good at detecting and identifying different objects in an image.<br>Our visual system is very fast and accurate with complex tasks like detecting objects and identifying obstacles,<br>which leads us to take several actions like run, walk, talk, jump, etc.<br>But when it comes to perform the same using Artificial Intelligence technique it becomes very tough.<br>The perform of autonomous driving cars, robotics, tracking object, face detections and many more applications,<br>depends on the object detection algorithm it is based on. As object detection serves the base for such innovative and<br>vast range of applications, we as a students of cognitive computing class would like to work on object detection in an image.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dataset" duration="0">
+        <p>We have readily available dataset for knife images from :<br><a href="http://kt.agh.edu.pl/matiolanski/KnivesImagesDatabase/" target="_blank">Download Knives</a></p>
+<p>Also, we have images of different categories of guns :<br><a href="http://www.imfdb.org/wiki/Category:Gun" target="_blank">Download Guns</a></p>
+<p>Knife and Guns images were scraped from the above two sites.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Flowchart" duration="0">
+        <p><img alt="pipeline" src="img\cd5803cb75838644.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Data Scraping" duration="0">
+        <ul>
+<li>Libraries Imported for web scraping :<br><img alt="libraries" src="img\9cd23d0ec8583734.png"><br>These are the libraries that were used to scrape the images from the website.</li>
+<li>Parsing the URL of guns website.<br>There are 24 different categories of gun. So the code will loop through all those categories to scrape all the images.<br><img alt="parsing" src="img\5ff02d4c7f9b7711.png"></li>
+<li>In this the knife URL is passed and the .rar file is extracted and stored in a local directory.<br><img alt="unrar" src="img\9ec867d057314cda.png"></li>
+<li>The images that was scraped different height and width. So in order to make height and width the same these lines of code had to be run.<br>Here every image&#39;s height and width is made 200x200 for uniformity.<br><img alt="dimension" src="img\4f1853a81cdfed43.png"></li>
+</ul>
+<p>After the images are extracted, the next step is to pass it through an object detection network.<br>There are many networks that can be worked on :</p>
+<ul>
+<li>Sliding window</li>
+<li>R-CNN</li>
+<li>Fast R-CNN</li>
+<li>Faster R-CNN</li>
+<li>Single Shot Detector</li>
+<li>YOLO(Yolo9000, Yolov2,Yolov3)</li>
+<li>MobileNet</li>
+<li>Inception Network</li>
+<li>AlexNet</li>
+</ul>
+<p>Every network listed above can be implemented from scratch, but due to time constraint and computational complexity, we have done transfer learning in our project.<br>So for every network that we tried, we ran the official architecture on our custom dataset(knife and gun) for the pre-trained weights and configuration( which was altered for our need) and got the weights for our dataset on which the images/video was trained.</p>
+<p>The architectures that we chose are :</p>
+<ul>
+<li>Yolov2</li>
+<li>SSD on mobilenet</li>
+<li>Faster R-CNN on Inceptionv2</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Object Detection Using Yolov2" duration="0">
+        <ul>
+<li>Now that we have the images with us, the first step to do is annotation of images. These images should have a boundary box and also labelled for the network to classify them. To do so, there are 2 GUI&#39;s :<br><br><ul>
+<li>LabelImage Tool box</li>
+<li>BBox Label Tool box<br>For Yolo, labelImg tool box is used.<br>(Just run labelImg.py from terminal)<br><img alt="labelimg" src="img\1eaa981281cb26a9.png"></li>
+</ul>
+</li>
+</ul>
+<p>This is what it looks like.<br>In ‘Open Dir&#39; the directory that contains the images should be given and to store the output files, the path can be given in ‘Changes Save Dir&#39;.</p>
+<p>In this method, the annotation files should be in .txt format. There is an option to choose YOLO format in this GUI.</p>
+<p>This will give text files for each image of the format :<br>Label_index , x_min,y_min,x_max,y_max</p>
+<p>In our case, Label_Index 0 is Gun and 1 is Knife.</p>
+<ul>
+<li>Once annotations are done for all the images, create a obj.names file with gun and knife in it.<br><img alt="annot" src="img\936fe2275399d0dc.png"></li>
+<li>Install darknet which is the framework for YOLO.<br><img alt="darknet" src="img\f758f16f89162c96.png"></li>
+<li>In that darknet, there will be a cfg folder which will have all the weights.<br>For this project Yolov2.cfg was used. Copy the contents in that configuration file to another configuration file and<br>name it the way u want it with .cfg extension.<br><img alt="cfg" src="img\af01f9ffa6e92ae9.png"></li>
+<li>Change the number of filters in the last Convolutional layer to (num_of_classes+5)*5.<br>In this case 35 and also change the number of classes in the next layer.</li>
+<li>Create 2 separate text files named train.txt and test.txt with names of all the training images and testing  images. Copy this into darknet folder.</li>
+<li>Download the pre-trained weights file for Yolo <a href="https://pjreddie.com/darknet/yolov2/" target="_blank">download darknet19_448.conv.23</a> from official website.</li>
+<li>Create 2 other files named obj.data with details about where the test, train data is stored, about where to save the weights and also form<br>where to get information about labels(obj.names) inside cfg folder in darknet.<br><img alt="obj" src="img\58ef299404eca57b.png"><img alt="weights" src="img\41d1ef9706e459e8.png"></li>
+<li>Once all these files are ready, run the following command to train your network for custom dataset and get your weights.<br>Run this command from darknet folder :<br><strong> ./darknet detector train cfg/obj.data cfg/yolo-obj.cfg darknet19_448.conv.23 </strong></li>
+</ul>
+<p>Since YOLO architecture is complicated and complex it will take hours to train the model.<br>On CPU, it will take years. This model has 100 epochs, with batch size = 64 and subdivisions  = 8 .<br>In normal CPU, each epoch takes 30 hours, so for training 100 epochs it would take a long time.<br>So I trained my model using NVIDIA titan Graphics Card. It took 3 hours to train the complete network.<br><img alt="train" src="img\3d7934add23599e8.png"><img alt="tr" src="img\9638436d28e54bf7.png"><img alt="test" src="img\b099c5d0978c2fea.png"><img alt="te" src="img\197e9d1c7b025756.png"></p>
+<aside class="warning"><p>Unfortunately, the IoU values that we got was very less and loss didn&#39;t decrease. So, the output that we got didn&#39;t predict anything.<br><img alt="g" src="img\c067de7eddd2bb17.png"></p>
+</aside>
+<aside class="special"><p>With this as the case, we decided to switch to another network , which is SSD_mobilenet.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Object Detection Using SSD MobileNet" duration="0">
+        <p>Single Shot Detector is another model used for object detection. It is relatively fast to train compared to YOLO.<br>To implement this :</p>
+<ul>
+<li>Just like how data annotation is done for YOLO, we need to do annotation in this case too but the only difference Is the format.<br>For SSD we .csv format is required.</li>
+<li>The same tool box can be used to do the annotation.</li>
+<li>The tool box provided only .txt and .xml format. So first do the annotation in .xml format for all the images.<br>Split them into train and test images. Run xml_to_csv.py separately for test and train images to get train_lables.csv and test_labels.csv.<br><br></li>
+</ul>
+<p><img alt="xml" src="img\433d230c494e3645.png"><br>This is how annotation xml file looks.</p>
+<p><img alt="csv" src="img\4dfb39a3f2d36f34.png"><br>This is csv file format.</p>
+<ul>
+<li>Once this is done, download SSD_mobilenet_v2_coco.cfg from <a href="https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md" target="_blank">Download models</a></li>
+<li>Edit the cfg files. Change the training image path, testing image path, training annotation path, testing annotation path.</li>
+<li>Change the number of classes too.</li>
+<li>Once all these are done, create a training folder inside which create a .pbtxt file with classes names on it.</li>
+<li>Now run this command from the terminal :<br><strong>python train.py –logtostderr –train_dir=training/ –pipeline_config_path=training/faster_rcnn_inception_v2_pets.config<br></strong><br>Training will take some time, but the weights will get saved for every 5 steps.<br><img alt="t" src="img\fcf14d21a9f5b9fc.png"></li>
+</ul>
+<p><strong> python export_inference_graph.py –input_type image_tensor</strong></p>
+<pre><code>                             --pipeline_config_path training/ssd_mobilenet_v2_coco.config 
+                             --trained_checkpoint_prefix training/model.ckpt-(highest value) 
+                             --output_directory inference_graph
+</code></pre>
+<p>Run this command with the highest value of weight file that Is generated.<br><img alt="ssd" src="img\cb8c3792ae636612.png"></p>
+<p>Once this is done , a .pb file will be generated. Now run object_detection_image.py file from python idle and check the output.</p>
+<aside class="warning"><p>In this, Knifes are getting detected as knifes but guns are also getting detected as knifes or sometimes not being detected at all.<br>So that is the drawback about this model.<br><img alt="i" src="img\86ae17a5c64be127.png"><br></p>
+</aside>
+<aside class="special"><p>To overcome this problem, we tried another network : Faster R-CNN.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Object Detection Using Faster R-CNN and Inceptionv2" duration="0">
+        
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="References" duration="0">
+        <p><em>[a]</em><a href="https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10#appendix-common-errors" target="_blank"><em>TensorFlow Setup</em></a><em><br>[b]</em><a href="https://www.arunponnusamy.com/yolo-object-detection-opencv-python.html" target="_blank"><em>Yolo Reference 1</em></a><em><br>[c]</em><a href="https://github.com/ManivannanMurugavel/YOLO-Annotation-Tool" target="_blank"><em>Yolo Reference 2</em></a><em><br>[d]</em><a href="] https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects" target="_blank"><em>Yolo Reference 3</em></a><em><br>[e]</em><a href="https://github.com/pjreddie/darknet/issues/382" target="_blank"><em>Darknet issues</em></a><em><br>[f]</em><a href="https://medium.com/coinmonks/detecting-custom-objects-in-images-video-using-yolo-with-darkflow-1ff119fa002f" target="_blank"><em>Custom Object Detection</em></a><em><br>[g]</em><a href="https://pjreddie.com/darknet/" target="_blank"><em>Darknet official</em></a><em><br>[h]</em><a href="https://medium.com/coinmonks/detecting-custom-objects-in-images-video-using-yolo-with-darkflow-1ff119fa002f" target="_blank"><em>Darknet Github</em></a><em><br>[i]</em><a href="https://github.com/tzutalin/labelImg" target="_blank"><em>Annotation-Tool</em></a></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49880327-14', 'auto');
+
+    (function() {
+      var gaCodelab = '0';
+      if (gaCodelab) {
+        ga('create', gaCodelab, 'auto', {name: 'codelab'});
+      }
+
+      var gaView;
+      var parts = location.search.substring(1).split('&');
+      for (var i = 0; i < parts.length; i++) {
+        var param = parts[i].split('=');
+        if (param[0] === 'viewga') {
+          gaView = param[1];
+          break;
+        }
+      }
+      if (gaView && gaView !== gaCodelab) {
+        ga('create', gaView, 'auto', {name: 'view'});
+      }
+    })();
+  </script>
+
+</body>
+</html>
