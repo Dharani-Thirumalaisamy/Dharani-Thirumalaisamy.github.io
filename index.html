@@ -163,13 +163,20 @@
 <aside class="special"><p>The output that we got is better than the other two models. So, we will be moving forward with this model as our final one.<br></p>
 </aside>
 <p><img alt="op" src="img\413ab0de72f5483f.png"><img alt="op1" src="img\146ba28ef721000b.png"><img alt="op2" src="img\1f4cef2dc757fd2.png"></p>
-<p>Trigger Implementation</p>
+        </google-codelab-step>
+    
+        <google-codelab-step label="Trigger Implementation" duration="0">   
 <p>Now that we have our best model out of 3, the next part is to trigger an alarm or email or SMS to someone who is monitoring it.<br>Here, in our project we have implemented email trigger.<br>So when user inputs an image and if our model detects it as knife or gun, the <a href="https://aws.amazon.com/lambda/features/" target="_blank">lambda function</a><br>provided by Amazon will get triggered and will send an email to the person in-charge of it.<br><img alt="trigger" src="img\4d3df5adb2467e84.png"></p>
 <p>For implementing trigger, Amazon&#39;s SES service is used. In this we are mentioning that we need to trigger an email based on an event which is detection of<br>a gun or a knife.<br><img alt="op3" src="img\ac7ddba1cf62135d.png"></p>
-<p>Flask Application</p>
+        </google-codelab-step>
+        
+        <google-codelab-step label="Flask Application" duration="0">
 <p>The important part is that people should be able to upload images or video. In order to accommodate, a flask application is developed to upload images.<br><img alt="fl" src="img\b74799add56605d.png"><br>First we are asking the user to input an image. The template for the web page is called from index.html file.<br><img alt="temp" src="img\61464fccf3d73cd9.png"></p>
 <p>The image is read in numpy array format which is later converted to image. This image is given as input to ObjectDetection.py file which will detect<br>the object in the uploaded image.<br><img alt="picf" src="img\fee36910caf7bff4.png"><br>ObjectDetector.py is same as object_detection_image.py that we used in SSD and Faster R-CNN model.</p>
-<p>References</p>
+          </google-codelab-step>
+        
+          <google-codelab-step label="References" duration="0">
+        
 <p><em>[a]</em><a href="https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10#appendix-common-errors" target="_blank"><em>TensorFlow Setup</em></a><em><br>[b]</em><a href="https://www.arunponnusamy.com/yolo-object-detection-opencv-python.html" target="_blank"><em>Yolo Reference 1</em></a><em><br>[c]</em><a href="https://github.com/ManivannanMurugavel/YOLO-Annotation-Tool" target="_blank"><em>Yolo Reference 2</em></a><em><br>[d]</em><a href="] https://github.com/AlexeyAB/darknet#how-to-train-to-detect-your-custom-objects" target="_blank"><em>Yolo Reference 3</em></a><em><br>[e]</em><a href="https://github.com/pjreddie/darknet/issues/382" target="_blank"><em>Darknet issues</em></a><em><br>[f]</em><a href="https://medium.com/coinmonks/detecting-custom-objects-in-images-video-using-yolo-with-darkflow-1ff119fa002f" target="_blank"><em>Custom Object Detection</em></a><em><br>[g]</em><a href="https://pjreddie.com/darknet/" target="_blank"><em>Darknet official</em></a><em><br>[h]</em><a href="https://medium.com/coinmonks/detecting-custom-objects-in-images-video-using-yolo-with-darkflow-1ff119fa002f" target="_blank"><em>Darknet Github</em></a><em><br>[i]</em><a href="https://github.com/tzutalin/labelImg" target="_blank"><em>Annotation-Tool</em></a></p>
 
 
