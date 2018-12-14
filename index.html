@@ -115,7 +115,7 @@
 <li>Change the number of filters in the last Convolutional layer to (num_of_classes+5)*5.<br>In this case 35 and also change the number of classes in the next layer.</li>
 <li>Create 2 separate text files named train.txt and test.txt with names of all the training images and testing  images. Copy this into darknet folder.</li>
 <li>Download the pre-trained weights file for Yolo <a href="https://pjreddie.com/darknet/yolov2/" target="_blank">download darknet19_448.conv.23</a> from official website.</li>
-<li>Create 2 other files named obj.data with details about where the test, train data is stored, about where to save the weights and also form<br>where to get information about labels(obj.names) inside cfg folder in darknet.<br><img alt="obj" src="img\58ef299404eca57b.png"><img alt="weights" src="img\41d1ef9706e459e8.png"></li>
+<li>Create 2 other files named obj.data with details about where the test, train data is stored, about where to save the weights and also form<br>where to get information about labels(obj.names) inside cfg folder in darknet.<br><img alt="obj" src="img\58ef299404eca57b.png"><img alt="weights" src="img\41d1ef9706e459e8.png"><br>The weight file here can be downloaded from <a href="https://console.cloud.google.com/storage/browser/yoloweights" target="_blank">Download Yolo Weights</a></li>
 <li>Once all these files are ready, run the following command to train your network for custom dataset and get your weights.<br>Run this command from darknet folder :<br><strong> ./darknet detector train cfg/obj.data cfg/yolo-obj.cfg darknet19_448.conv.23 </strong></li>
 </ul>
 <p>Since YOLO architecture is complicated and complex it will take hours to train the model.<br>On CPU, it will take years. This model has 100 epochs, with batch size = 64 and subdivisions  = 8 .<br>In normal CPU, each epoch takes 30 hours, so for training 100 epochs it would take a long time.<br>So I trained my model using NVIDIA titan Graphics Card. It took 3 hours to train the complete network.<br><img alt="train" src="img\3d7934add23599e8.png"><img alt="tr" src="img\9638436d28e54bf7.png"><img alt="test" src="img\b099c5d0978c2fea.png"><img alt="te" src="img\197e9d1c7b025756.png"></p>
@@ -128,7 +128,9 @@
       </google-codelab-step>
     
       <google-codelab-step label="Object Detection Using SSD MobileNet" duration="0">
-        <p>Single Shot Detector is another model used for object detection. It is relatively fast to train compared to YOLO.<br>To implement this :</p>
+        <p>Single Shot Detector is another model used for object detection. It is relatively fast to train compared to YOLO.</p>
+          <p>Before starting with the implementation, tensorflow environment should be setup properly to execute the files in this model.<br>For that refer <a href="https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10#appendix-common-errors" target="_blank">Tensorflow</a><br>Once the environment is setup, the model implementation can be done.</p>
+          <p>To implement this :</p>
 <ul>
 <li>Just like how data annotation is done for YOLO, we need to do annotation in this case too but the only difference Is the format.<br>For SSD we .csv format is required.</li>
 <li>The same tool box can be used to do the annotation.</li>
