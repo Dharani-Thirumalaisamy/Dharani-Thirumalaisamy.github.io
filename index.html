@@ -55,7 +55,15 @@
       </google-codelab-step>
     
       <google-codelab-step label="Flowchart" duration="0">
-        <p><img alt="pipeline" src="img\cd5803cb75838644.png"></p>
+        <p><img alt="pipeline" src="img\5ef6fb07921d9f2.png"></p>
+<p>Description:</p>
+<ul>
+<li>User accesses flask application from his browser.</li>
+<li>User uploads image through flask application to detect knife or gun.</li>
+<li>Then the image will access a EC2 instance on which flask application is running.<br>This in turn calls the object detection model that is running in the back-end of the application.</li>
+<li>If any gun or knife is detected in an image, using IAM RDE, EC2 instance will publish a SNS message which will trigger an AWS lambda function<br>which eventually triggers an email to the server side user.</li>
+<li>Also the image detected in the image will be reported back to the user.</li>
+</ul>
 
 
       </google-codelab-step>
@@ -172,7 +180,7 @@
         
         <google-codelab-step label="Flask Application" duration="0">
 <p>The important part is that people should be able to upload images or video. In order to accommodate, a flask application is developed to upload images.<br><img alt="fl" src="img\b74799add56605d.png"><br>First we are asking the user to input an image. The template for the web page is called from index.html file.<br><img alt="temp" src="img\61464fccf3d73cd9.png"></p>
-<p>The image is read in numpy array format which is later converted to image. This image is given as input to ObjectDetection.py file which will detect<br>the object in the uploaded image.<br><img alt="picf" src="img\fee36910caf7bff4.png"><br>ObjectDetector.py is same as object_detection_image.py that we used in SSD and Faster R-CNN model.</p>
+<p>The image is read in numpy array format which is later converted to image. This image is given as input to ObjectDetection.py file which will detect<br>the object in the uploaded image.<br><img alt="picf" src="img\fee36910caf7bff4.png"><img alt="p" src="img\381ee4c0ab5db7c1.png"><img alt="q" src="img\13249c4984fd87ce.png"><img alt="w" src="img\e101eea658293010.png"></p>ObjectDetector.py is same as object_detection_image.py that we used in SSD and Faster R-CNN model.</p>
           </google-codelab-step>
         
           <google-codelab-step label="References" duration="0">
